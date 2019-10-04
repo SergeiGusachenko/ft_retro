@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Enemy.hpp                                          :+:      :+:    :+:   */
+/*   Asteroid.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dezzeddi <dezzeddi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nwhitlow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/20 20:08:49 by sgusache          #+#    #+#             */
-/*   Updated: 2019/07/21 22:53:32 by nwhitlow         ###   ########.fr       */
+/*   Created: 2019/07/21 22:40:42 by nwhitlow          #+#    #+#             */
+/*   Updated: 2019/07/21 22:58:01 by nwhitlow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENEMY_HPP
-#define ENEMY_HPP
+#ifndef ASTEROID_HPP
+#define ASTEROID_HPP
 #include "AGameObjects.hpp"
-#include "Rocket.hpp"
 #include "Player.hpp"
 
-class Enemy: public AGameObjects
+class Asteroid: public AGameObjects
 {
 	private:
-		int render_counter;
-		virtual void	attack(World *);
 	public:
-		Enemy(int speed, int x, int y);
-		Enemy(const Enemy & src);
+		Asteroid();
+		Asteroid(const Asteroid & src);
 		virtual void	update(World *);
 		virtual void	takeDamage();
 		void			draw() const;
@@ -32,8 +29,8 @@ class Enemy: public AGameObjects
 		void			interact(Enemy *);
 		void			interact(Rocket *);
 		void			interact(Asteroid *);
-		~Enemy();
+		~Asteroid();
 
-		Enemy & operator=(const Enemy & src);
+		Asteroid & operator=(const Asteroid & src);
 };
 #endif

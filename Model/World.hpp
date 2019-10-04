@@ -1,18 +1,19 @@
 #ifndef WORLD_HPP
 #define WORLD_HPP
-#include "AGameObjects.hpp"
-#include "Player.hpp"
-#include "Enemy.hpp"
 #include "../Controller/Input.hpp"
-
+#include "Player.hpp"
+#include "GameObjectList.hpp"
+#include "../Controller/IController.hpp"
 class World
 {
 	private:
 	int _level;
-	// TODO Generalize or add to copy/assignemnt
+	int _time;
+	int _score;
+	int _timeTillEnemy;
 	Player _player;
-	Enemy _enemy;
-	Enemy _enemy1;
+	GameObjectList _gameObjects;
+	GameObjectList _newObjects;
 
 	World();
 
@@ -20,7 +21,8 @@ class World
 	World(int level);
 	World(const World & src);
 	~World();
-	void update(const Input &);
+	void add(AGameObjects *);
+	IController *update(const Input &);
 	void render() const;
 
 	World & operator=(const World & src);

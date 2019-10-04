@@ -7,13 +7,14 @@
 class GameOver : public IController
 {
 	private:
-	int _option;
-	int _offsetX, _offsetY;
+	int _score;
 	int _spectrum;
+	int _offsetX, _offsetY;
 	void mvaddstr_relative(int y, int x, const std::string & str) const;
+	GameOver();
 
 	public:
-	GameOver();
+	GameOver(int score);
 	GameOver(const GameOver & src);
 	~GameOver();
 	IController * update(const Input &);

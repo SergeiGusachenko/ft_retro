@@ -6,10 +6,12 @@
 #include "Input.hpp"
 
 # define GAMEOVER_WIDTH 64
-# define GAMEOVER_HEIGHT 13
+# define GAMEOVER_HEIGHT 15
 # define ENTER_KEY 10
 
-GameOver::GameOver() : _option(0), _spectrum(0)
+GameOver::GameOver() {}
+
+GameOver::GameOver(int score) : _spectrum(0), _score(score)
 {
 	int screenWidth, screenHeight;
 	getmaxyx(stdscr, screenHeight, screenWidth);
@@ -17,9 +19,11 @@ GameOver::GameOver() : _option(0), _spectrum(0)
 	if (this->_offsetX < 0) this->_offsetX = 0;
 	this->_offsetY = (screenHeight - GAMEOVER_HEIGHT) / 2;
 	if (this->_offsetY < 0) this->_offsetY = 0;
+	if (this->_score > 999999)
+		this->_score = 999999;
 }
 
-GameOver::GameOver(const GameOver & src) : _option(src._option), _spectrum(src._spectrum) {}
+GameOver::GameOver(const GameOver & src) : _spectrum(src._spectrum), _score(src._score) {}
 GameOver::~GameOver() {}
 
 IController * GameOver::update(const Input & input)
@@ -74,13 +78,14 @@ void GameOver::render() const
 			if (g_gameOver[y][x] != ' ')
 				attroff(COLOR_PAIR(color));
 		}
-	mvaddstr(this->_offsetY + 8, this->_offsetX + 19, "WE PRESENT YOU A NEW QUEST");
-	mvaddstr(this->_offsetY + 10, this->_offsetX + 27, "PRESS ENTER");
+	mvprintw(this->_offsetY + 8, this->_offsetX + 24, "YOUR SCORE: %.6d", this->_score);
+	mvaddstr(this->_offsetY + 10, this->_offsetX + 19, "WE PRESENT YOU A NEW QUEST");
+	mvaddstr(this->_offsetY + 12, this->_offsetX + 27, "PRESS ENTER");
 }
 
 GameOver & GameOver::operator=(const GameOver & src)
 {
-	this->_option = src._option;
+	this->_score = src._score;
 	this->_spectrum = src._spectrum;
 	return *this;
 }

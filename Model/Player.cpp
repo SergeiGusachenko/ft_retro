@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Player.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgusache <sgusache@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dezzeddi <dezzeddi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/20 20:30:47 by sgusache          #+#    #+#             */
-/*   Updated: 2019/07/21 15:10:47 by sgusache         ###   ########.fr       */
+/*   Updated: 2019/07/21 22:52:39 by nwhitlow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,45 @@
 #include "Rocket.hpp"
 #include <ncurses.h>
 
-void	Player::update()
+void	Player::update(World *world)
 {
-	for (int i = 0; i < current_ammo; i++)
-	{
-		ammo[i]->update();
-	}
 }
 
 void	Player::move(std::string dirrection)
 {
-	int new_x = this->x;
-	int new_y = this->y;
+	float new_x = this->x;
+	float new_y = this->y;
 	if (dirrection == "right")
-		new_x++;
+		new_x += 1.7;
 	if (dirrection == "left")
-		new_x--;
+		new_x -= 1.7;
 	if (dirrection == "up")
-		new_y++;
+		new_y += 0.7;
 	if (dirrection == "down")
-		new_y--;
+		new_y -= 0.7;
 	this->x = new_x;
 	this->y = new_y;
 }
 
-void		Player::attack()
+void		Player::attack(World *world)
 {
-	ammo[current_ammo] = new Rocket(1, this->x, this->y + 4);
-	current_ammo++;
+	world->add(new Rocket(-0.9, this->x + 3, this->y));
 }
 
-Player::Player(int speed, int x, int y): AGameObjects(speed, x, y)
+Player::Player() : AGameObjects(0, 0, 0, 0, 0, 0)
+{
+}
+
+Player::Player(int x, int y): AGameObjects(1, x, y, 7, 4, 1)
 {
 	draw(x, y);
 	this->x = x;
 	this->y = y;
-	this->current_ammo = 0;
-	this->sizeX = 7;
-	this->sizeY = 4;
 }
 
 void Player::takeDamage()
 {
-
+	this->hp -= 30;
 }
 Player::~Player()
 {
@@ -65,16 +61,38 @@ Player::~Player()
 
 void Player::draw(int x, int y) const
 {
+	attron(COLOR_PAIR(4));
 	mvaddstr(y, x, "   /\\");
 	mvaddstr(y + 1, x, "  (  )");
 	mvaddstr(y+ 2, x, "  (  )");
 	mvaddstr(y+ 3, x, " /|/\\|\\");
 	mvaddstr(y + 4, x, "/_||||_\\");
-	for (int i = 0; i < current_ammo; i++)
-		ammo[i]->draw(0, 0);
+	attroff(COLOR_PAIR(4));
 }
 
 void Player::draw() const
 {
 	this->draw(this->x, this->y);
+}
+
+void Player::interact_init(AGameObjects *obj)
+{
+	obj->interact(this);
+}
+
+void Player::interact(Player *p) {}
+void Player::interact(Enemy *e) {}
+void Player::interact(Rocket *r) {}
+void Player::interact(Asteroid *a) {}
+
+Player::Player(const Player & src) : AGameObjects(src.x, src.y, src.speed, src.sizeX, src.sizeY, src.hp)
+{
+	this->rocket_speed = src.rocket_speed;
+}
+
+Player & Player::operator=(const Player & src)
+{
+	AGameObjects::operator=(src);
+	this->rocket_speed = src.rocket_speed;
+	return *this;
 }

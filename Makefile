@@ -1,7 +1,7 @@
 CC=clang++
 CFLAGS=-Wall -Wextra -Werror
 OBJS_CONTROLLER=GameOver.o FrameClock.o Input.o main.o time_util.o MainMenu.o GameController.o
-OBJS_MODEL=AGameObjects.o Enemy.o Player.o Rocket.o World.o
+OBJS_MODEL=AGameObjects.o Enemy.o Player.o Rocket.o World.o GameObjectList.o Scenery.o Asteroid.o
 OBJS_VIEW=
 OBJS=$(addprefix Controller/, $(OBJS_CONTROLLER)) \
 	 $(addprefix Model/, $(OBJS_MODEL)) \

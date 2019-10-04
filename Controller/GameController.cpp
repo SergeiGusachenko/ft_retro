@@ -14,8 +14,7 @@ GameController::~GameController() {}
 
 IController * GameController::update(const Input & input)
 {
-	this->_world.update(input);
-	return NULL;
+	return (this->_world.update(input));
 }
 
 void GameController::render() const

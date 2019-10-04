@@ -6,7 +6,7 @@
 #include "GameController.hpp"
 
 # define MAINMENU_WIDTH 64
-# define MAINMENU_HEIGHT 17
+# define MAINMENU_HEIGHT 20
 
 MainMenu::MainMenu() : _option(0)
 {
@@ -62,6 +62,7 @@ void MainMenu::render() const
 	mvaddstr_relative(10, 22, "CONTINUE FROM LEVEL 1");
 	mvaddstr_relative(12, 22, "CONTINUE FROM LEVEL 2");
 	mvaddstr_relative(14, 22, "CONTINUE FROM LEVEL 3");
+	mvaddstr_relative(17, 4, "nwhitlow                dezzeddi                sgusache");
 	mvaddstr_relative(8 + this->_option * 2, 19, ">");
 }
 
