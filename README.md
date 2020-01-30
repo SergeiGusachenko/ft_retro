@@ -1,6 +1,8 @@
 # FT_RETRO
  Game on C++ [42SchoolProject]
 
+### Preview
+![Alt Text]()
 ### Installing
 1. Open terminal
 2. git clone https://github.com/SergoGusachenko/ft_retro.git ft_retro
